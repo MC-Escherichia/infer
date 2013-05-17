@@ -1,15 +1,12 @@
 (ns infer.features
   (:import java.util.Random)
-  (:use clojure.contrib.combinatorics)
-  (:use clojure.contrib.math)
-  (:use clojure.set)
-  (:use infer.measures)
-  (:use infer.information-theory)
-  (:use infer.probability)
-  (:use infer.matrix)
-  (:use infer.core)
-  (:use [clojure.contrib.map-utils :only [deep-merge-with]])
-  (:use clojure.set))
+  (:use clojure.math.combinatorics
+        clojure.math.numeric-tower
+        clojure.set
+        [infer measures information-theory probability matrix core compat]
+        )
+  
+  )
 
 ;;TODO: check on all these vec operations.
 ;;what about pop on ecs and butlast?

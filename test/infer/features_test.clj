@@ -100,11 +100,11 @@
 	      [0 6 0 2 2 2] 
 	      [0 6 0 2 1 1]]]
     
-  (is (= 7
+  (is (= 7.0
 	 (counts-when
 	  (partial nth-is? 4 #(> % 2))
 	  data)))
-  (is (= 3
+  (is (= 3.0
 	 (counts-when
 	  (partial nth-is? 4 #(< % 3))
 	  data)))))

@@ -4,18 +4,14 @@
   (:use infer.measures))
 
 (deftest sum-test
- (is (= 9
-      (sum [2 3 4]))))
+ (is (= 9.0 (sum [2 3 4]))))
 
 (deftest weighted-sum-test
- (is (= 9
-      (weighted-sum [2 3 4] [1 1 1])))
- (is (= 4.5
-      (weighted-sum [2 3 4] [0.5 0.5 0.5]))))
+ (is (= 9.0 (weighted-sum [2 3 4] [1 1 1])))
+ (is (= 4.5 (weighted-sum [2 3 4] [0.5 0.5 0.5]))))
 
 (deftest sample-mean
- (is (= 3 
-      (mean [2 3 4]))))
+ (is (= 3.0 (mean [2 3 4]))))
 
 (deftest stdev-test
  (is (= 2.138089935299395 
@@ -95,8 +91,7 @@
 ;; Plugging this into the formula, we calculate, s = (2 · 1) / (4 + 4) = 0.25.
 (deftest dice-string
   (is 
-   (= 0.25
-      (dice-coefficient-str "night" "nacht"))))
+   (= 0.25 (float (dice-coefficient-str "night" "nacht")))))
 
 (deftest get-ngrams
   (is (= #{"gh" "ht" "ni" "ig"}
@@ -141,7 +136,7 @@
 
 (deftest manhattan
   (is 
-   (= (+ 1 1 2 1 1) 
+   (= (+ 1 1 2 1 1.0) 
       (manhattan-distance [2 4 3 1 6]
 			  [3 5 1 2 5]))))
 
@@ -167,7 +162,7 @@
   (is (= 100 (dot-product [5 5 5 5] [5 5 5 5]))))
 
 (deftest nuclear
-  (is (= 10 (nuclear-norm (matrix (I 10 10))))))
+  (is (= 10.0 (nuclear-norm (matrix (I 10 10))))))
 
 (deftest frobenius
-  (is (= 10 (frobenius-norm (matrix (I 100 100)))))) 
+  (is (= 10.0 (frobenius-norm (matrix (I 100 100)))))) 

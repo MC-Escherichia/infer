@@ -1,6 +1,7 @@
 (ns infer.lsh-test
-  (:use infer.lsh)
-  (:use clojure.test))
+  (:use infer.lsh
+        clojure.test)
+  )
 
 (deftest test-dot-product
   (is (= 100 (dot-product [5 5 5 5] [5 5 5 5]))))

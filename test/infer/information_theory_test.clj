@@ -1,8 +1,8 @@
 (ns infer.information-theory-test
-  (:use clojure.test)
-  (:use infer.information-theory)
-  (:use infer.probability)
-  (:use clojure.contrib.math))
+  (:use clojure.test
+        clojure.math.numeric-tower
+        [infer information-theory probability])
+  )
 
 (defn =within [delta x y]
   (>= delta (abs (- x y))))
@@ -53,7 +53,7 @@
 	    2 10
 	    3 5
 	    4 5}}]
-    (is (= 0
+    (is (= 0.0
 	   (mutual-information independent-joint [py pz]))))
   (let [py {1 3
 	    2 5}

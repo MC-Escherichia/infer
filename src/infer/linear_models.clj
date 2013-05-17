@@ -1,11 +1,8 @@
 (ns infer.linear-models
-  (:use clojure.contrib.math)
-  (:use clojure.set)
-  (:use infer.core)
-  (:use infer.matrix)
-  (:use infer.learning)
-  (:use infer.measures)
-  (:use infer.probability))
+  (:use clojure.math.numeric-tower
+        clojure.set
+        [infer core matrix learning measures probability])
+  )
 
 (defn vecize-1d
 "if this is the 1d case, put each calue in a vec."

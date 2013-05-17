@@ -9,9 +9,9 @@
 (deftest inc-at-test
   (let [A (fill 0 3 3)]
     (inc-at A 0 0)
-    (is (= 1 (get-at A 0 0)))
+    (is (= 1.0 (get-at A 0 0)))
     (inc-at A 2 0 0)
-    (is (= 3 (get-at A 0 0)))))
+    (is (= 3.0 (get-at A 0 0)))))
 
 (deftest ensure-vecs-test
   (let [v (ensure-vecs [[1]])
@@ -26,36 +26,35 @@
   (let [m (matrix
 	   [[1 2 3] [4 5 6]])
 	single-m (column-matrix [1 2 3 4 5 6])]
-	   (is (= 6 (get-at m 1 2)))
-	   (is (= 6 (get-at single-m 5 0)))))
+	   (is (= 6.0 (get-at m 1 2)))
+	   (is (= 6.0 (get-at single-m 5 0)))))
 
 (deftest to-and-from-matrix
-  (let [a [[1 2 3] [4 5 6]]
-	A (matrix
-	   [[1 2 3] [4 5 6]])
+  (let [a [[1.0 2.0 3.0] [4.0 5.0 6.0]]
+	A (matrix [[1 2 3] [4 5 6]])
 	b (from-matrix A)]
 	(is (= a b))))
 
 (deftest to-and-from-sparse-matrix
-  (let [a [{0 1, 5 2, 9 3} {4 4,9 5, 16 6}]
+  (let [a [{0 1.0, 5 2.0, 9 3.0} {4 4.0, 9 5.0, 16 6.0}]
 	A (sparse-matrix a)
 	b (from-sparse-2d-matrix A)]
     (is (= a b))))
 
 (deftest to-and-from-sparse-colt-matrix
-  (let [a [{0 1, 5 2, 9 3} {4 4,9 5, 16 6}]
+  (let [a [{0 1.0, 5 2.0, 9 3.0} {4 4.0, 9 5.0, 16 6.0}]
 	A (sparse-colt-matrix a)
 	b (from-sparse-2d-matrix A)]
     (is (= a b))))
 
 (deftest to-and-from-sparse-pcolt-matrix
-  (let [a [{0 1, 5 2, 9 3} {4 4,9 5, 16 6}]
+  (let [a [{0 1.0, 5 2.0, 9 3.0} {4 4.0, 9 5.0, 16 6.0}]
 	A (sparse-pcolt-matrix a)
 	b (from-sparse-2d-matrix A)]
     (is (= a b))))
 
 (deftest to-and-from-column-matrix
-  (let [a [1 2 3]
+  (let [a [1.0 2.0 3.0]
 	A (column-matrix
 	   a)
 	b (from-column-matrix A)]
@@ -63,8 +62,8 @@
 
 (deftest identity-matrix
   (let [i (from-matrix (I 2 2))]
-	(is (= [[1 0]
-		[0 1]]
+	(is (= [[1.0 0.0]
+		[0.0 1.0]]
 	       i))))
 
 (deftest create-diagonal-weights

@@ -1,6 +1,7 @@
 (ns infer.random-variate
-  (:use [clojure.contrib.math :only (expt sqrt)])
-	(:use [clojure.contrib.generic.math-functions :only (tan log cos sin)]))
+  (:use [clojure.math.numeric-tower :only (expt sqrt)]
+        [clojure.algo.generic.math-functions :only (tan log cos sin)])
+  )
 
 (defn exp-rv
 	"Simulate an exponential distribution with

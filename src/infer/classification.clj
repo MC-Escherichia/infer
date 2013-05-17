@@ -4,12 +4,10 @@
 
    Classifiers are maps of classifier-name -> functions, data are maps of
    feature-name features."
-  (:use infer.features)
-  (:use infer.neighbors)
-  (:use infer.linear-models)
-  (:use [clojure.contrib.map-utils :only [deep-merge-with]])
-  (:use [infer.core :only [safe threshold-to map-map levels-deep all-keys]])
-  (:use [infer.probability :only [bucket +cond-prob-tuples]]))
+  (:use [infer features neighbors compat linear-models]
+        [infer.core :only [safe threshold-to map-map levels-deep all-keys]]
+        [infer.probability :only [bucket +cond-prob-tuples]]
+        ))
 
 (defn discretizing-classifiers
   "Makes a discretizing classifier out of each key-range pair."
@@ -57,11 +55,11 @@
 
 (defn map-as-matrix [m]
   (let [ordered (map sort (vals (sort m)))]
-	(map (comp vec vals) ordered)))
+	(mapv (comp vec vals) ordered)))
 
 (defn real-precision [confusion-matrix]
-  (map (fn [v i]
-	 (/ (nth v i)
+  (mapv (fn [v i]
+	 (/ (float (nth v i))
 	    (apply + v)))
        confusion-matrix
        (range 0 (count confusion-matrix))))
@@ -69,14 +67,14 @@
 (defn real-recall
   "Computes recall by class label from confusion matrix."
   [confusion-matrix]
-    (real-precision (seq-trans confusion-matrix)))
+  (real-precision (seq-trans confusion-matrix)))
 
 (defn precision
   "Computes precision by class label from confusion matrix."
   [m]
-    (real-precision (map-as-matrix m)))
+  (real-precision (map-as-matrix m)))
 
 (defn recall
   "Computes recall by class label from confusion matrix."
   [m]
-    (real-precision (seq-trans (map-as-matrix m))))
+  (real-precision (seq-trans (map-as-matrix m))))

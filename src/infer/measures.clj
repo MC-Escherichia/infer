@@ -1,10 +1,8 @@
 (ns infer.measures
-  (:use clojure.contrib.math)
-  (:use clojure.contrib.map-utils)
-  (:use clojure.set)
-  (:use infer.core)
-  (:use infer.matrix)
-  (:use [infer.probability :only [gt lt binary]])
+  (:use [infer core compat matrix]
+        [infer.probability :only [gt lt binary]]
+        clojure.math.numeric-tower
+        clojure.set)
   (:import org.apache.commons.math.stat.StatUtils)
   (:import [org.apache.commons.math.stat.correlation
 	    PearsonsCorrelation Covariance])

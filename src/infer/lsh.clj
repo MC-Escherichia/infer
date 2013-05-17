@@ -1,8 +1,9 @@
 (ns infer.lsh
-	(:use [clojure.contrib.math :only (floor)])
-	(:use [clojure.set :only (union intersection difference)])
-	(:import [java.util Random])
-	(:use [infer.random-variate :only (random-normal)]))
+  (:use [clojure.math.numeric-tower :only (floor)]
+        [clojure.set :only (union intersection difference)]
+        [infer.random-variate :only (random-normal)])
+  (:import [java.util Random])
+  )
 
 (defn dot-product
   [x y]
@@ -38,9 +39,6 @@
   [v b r]
   (fn [data]
       (floor (/ (+ b (dot-product data v)) r))))
-
-(defn spherical-l2-hash
-	"Proposed by Terasawa and Tanaka (2007)")
 
 (defn- apply-hash-ensemble
 	"Takes a list of minhash functions and data."

@@ -1,12 +1,8 @@
 (ns infer.learning
-  (:use clojure.set)
-  (:use clojure.contrib.math)
-  (:use infer.core)
-  (:use infer.matrix)
-  (:use infer.measures)
-  (:use infer.probability)
-  (:use infer.information-theory)
-  (:use infer.features))
+  (:use clojure.set
+        clojure.math.numeric-tower
+        [infer core matrix measures probability information-theory features]
+        ))
 
 ;;optimization, regularization, and subset selection
 ;;TODO: should be split into a few libs

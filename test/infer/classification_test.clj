@@ -1,9 +1,16 @@
 (ns infer.classification-test
-  (:use clojure.test)
-  (:use infer.classification)
-  (:use infer.cross-validation)
-  (:use infer.probability)
-  (:use clojure.contrib.map-utils))
+  (:use clojure.test
+        [infer classification cross-validation probability compat]
+        ))
+
+(defn- float= [x y]
+  (let [epsilon 0.0001
+        scale (if (or (zero? x) (zero? y)) 1 (Math/abs x))]
+    (<= (Math/abs (- x y)) (* scale epsilon))))
+
+(defn- float=-seqs [s1 s2]
+  (apply = (map float= s1 s2))
+  )
 
 (deftest classify-one-to-one-item
   (let [test-fns {:a (present-when (gt 5)) :b (present-when (lt 5))}]
@@ -136,31 +143,31 @@
        (confusion-matrix (model-from-maps ex1) (first ex2)))))
 
 (deftest recall-test
-  (is (=
+  (is (float=-seqs
        [(float (/ 605170 (+ 605170 5032 3377)))
-        (float (/ 3216 (+ 3216 3571 57663)))
-	(float (/ 13100 (+ 689 13100 17962)))]
+              (float (/ 3216 (+ 3216 3571 57663)))
+              (float (/ 13100 (+ 689 13100 17962)))]
        (recall
 	{1 {2 689, 0 5032, 1 3216},
 	 2 {1 3571, 0 3377, 2 13100},
 	 0 {2 17962, 0 605170, 1 57663}})))
-  (is (= [(float (/ 19817 (+ 19817 558)))
+  (is (float=-seqs [(float (/ 19817 (+ 19817 558)))
 	  (float (/ 3960 (+ 3960 1291 198)))
 	  (float (/ 2132 (+ 2132 69 274)))]
 	 (recall
 	  {1 {0 558, 2 274, 1 3960},
 	   0 {2 69, 1 1291, 0 19817},
 	   2 {0 0, 1 198, 2 2132}})))
-  (is (= [0.5, 0, 0.5]
+  (is (= [0.5, 0.0, 0.5]
 	 (recall
 	  {0 {0 5, 1 2, 2 5},
 	   1 {0 0, 1 0, 2 0},
 	   2 {0 5, 1 5, 2 5}}))))
 
 (deftest precision-test
-  (is (= [(float (/ 349474 (+ 25078 68131 349474)))]
+  (is (float=-seqs [(float (/ 349474 (+ 25078 68131 349474)))]
 	 (precision {0 {2 25078, 1 68131, 0 349474}})))
-  (is (= [(float (/ 349474 (+ 25078 68131 349474)))
+  (is (float=-seqs [(float (/ 349474 (+ 25078 68131 349474)))
 	  (float (/ 9752 (+ 257 9752 89783)))]
 	 (precision {0 {2 25078, 1 68131, 0 349474}
 		     1 {2 257, 1 9752, 0 89783}}))))

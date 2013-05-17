@@ -1,11 +1,10 @@
 (ns infer.neighbors
-  (:use infer.measures)
-  (:use infer.core)
-  (:use infer.features)
-  (:use clojure.contrib.math)
-	(:use [clojure.set :only (union intersection difference)])
-	(:import [java.util Random])
-	(:use [infer.random-variate :only (random-normal)]))
+  (:use [infer measures core features]
+        clojure.math.numeric-tower
+        [infer.random-variate :only (random-normal)]
+        [clojure.set :only (union intersection difference)])
+  (:import [java.util Random])
+  )
 
 ;;TODO: is motthing really the right name for this lib?  Density estimation?  k-NN & kernels?
 ;;TODO: change sigs to match the matrix apis of xs & ys rather that [xs & ys]
@@ -111,12 +110,13 @@
 ;;TODO:
 ;;1. pass the distance fn and weighing fn seperately rahter than composing into weigh prior to calling?
 ;;for kernels, but weighted mean calc is identical for k-nn
-(defn nadaraya-watson-estimator [point weigh points]
-"takes a query point, a weight fn, and a seq of points, and returns the weighted sum of the points divided but the sum of the weights. the weigh fn is called with the query point and each point in the points seq.  the weigh fn is thus a composition of a weight fn and a distance measure.
+(defn nadaraya-watson-estimator
+  "takes a query point, a weight fn, and a seq of points, and returns the weighted sum of the points divided but the sum of the weights. the weigh fn is called with the query point and each point in the points seq.  the weigh fn is thus a composition of a weight fn and a distance measure.
 
 http://en.wikipedia.org/wiki/Kernel_regression#Nadaraya-Watson_kernel_regression
 
 "
+  [point weigh points]
   (let [weights* (weights point weigh points)
 	divisor (sum weights*)]
     (if (single-class? points)
@@ -174,9 +174,6 @@ http://en.wikipedia.org/wiki/Kernel_regression#Nadaraya-Watson_kernel_regression
   [v b r]
   (fn [data]
       (floor (/ (+ b (dot-product data v)) r))))
-
-(defn spherical-l2-hash
-	"Proposed by Terasawa and Tanaka (2007)")
 
 (defn- apply-hash-ensemble
 	"Takes a list of minhash functions and data."

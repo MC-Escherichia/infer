@@ -1,7 +1,8 @@
 (ns infer.core
   (:import org.apache.commons.math.util.MathUtils)
-  (:use clojure.contrib.monads)
-  (:use [clojure.set :only [intersection]]))
+  (:use clojure.algo.monads
+        [clojure.set :only [intersection]])
+  )
 
 ;;TODO: find tests for this stuff.
 

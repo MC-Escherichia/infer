@@ -1,7 +1,7 @@
 (ns infer.io
-  (:use clojure.contrib.duck-streams)
-  (:use clojure-csv.core)
-  (:use infer.matrix))
+  (:use clojure.java.io
+        clojure-csv.core ;; TODO: change to data.csv?
+        infer.matrix))
 
 (defn csv->matrix [path]
   (let [strings (parse-csv (slurp path))]

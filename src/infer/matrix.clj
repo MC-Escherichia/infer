@@ -7,7 +7,6 @@
   (:import [org.ujmp.core.matrix Matrix2D])
   (:import [org.ujmp.colt
 	    ColtSparseDoubleMatrix2D])
-;;  (:import [org.apache.mahout.core SparseMatrix])
   (:import [org.ujmp.parallelcolt
 	    ParallelColtSparseDoubleMatrix2D])
   (:import [org.ujmp.core.doublematrix
@@ -68,23 +67,6 @@
 
 (defn sparse-pcolt-matrix [xs]
  (sparse-matrix* xs #(ParallelColtSparseDoubleMatrix2D. %)))
-
-;; (defn sparse-mahout-matrix [xs]
-;;   (let [n-rows (count xs)
-;; 	cols (reduce (fn [acc row]
-;; 		       (union acc (into #{} (keys row))))
-;; 		     #{}
-;; 		     xs)
-;; 	m (SparseMatrix. (long-array [n-rows (+ (apply max cols) 1)]))
-;; 	row-indices (range 0 (count xs))]
-;;     (dorun
-;;      (map (fn [row r]
-;; 	    (dorun (map (fn [[c v]]
-;; 			  (.setQuick m r c v)
-;; 			row)))
-;; 	  xs
-;; 	  row-indices))
-;;     m)))
 
 (defn from-sparse-matrix [m]
   (map (fn [coord]
